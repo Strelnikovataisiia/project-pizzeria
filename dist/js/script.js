@@ -57,13 +57,11 @@
       const thisProduct = this;
       thisProduct.id = id;
       thisProduct.data = data;
-
       thisProduct.renderInMenu();
-      //console.log('new product:', thisProduct);
-      thisProduct.initAccordion();
+      console.log('new product:', thisProduct);
     }
     renderInMenu(){
-      const thisProduct = this;
+      const thisProduct = this; 
       //generate HTML based on template
       const generatedHTML = templates.menuProduct(thisProduct.data);
       //create element using utils.createElementFromHTML
@@ -73,50 +71,23 @@
       //add element to menu
       menuContainer.appendChild(thisProduct.element);
     }
-
-    getElements(){
-      const thisProduct = this;
-
-      thisProduct.accordionTrigger = thisProduct.element.querySelector(select.menuProduct.clickable);
-      thisProduct.form = thisProduct.element.querySelector(select.menuProduct.form);
-      thisProduct.formInputs = thisProduct.form.querySelectorAll(select.all.formInputs);
-      thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
-      thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
-    }
-
-    initAccordion(){
-      const thisProduct = this;
-
-      //find the clickable trigger (the element that should react to clicking)
-      const clickableTrigger = thisProduct.element.querySelector(select.menuProduct.clickable);
-
-      //START: add event listener to clickable trigger on event click
-      clickableTrigger.addEventListener('click', function(event) {
-        //prevent default action for event
-        event.preventDefault();
-        //find active product (product that has active class)
-        const activeProducts = document.querySelector(select.all.menuProductsActive);
-        //if there is active product and it's not thisProduct.element, remov class active from it
-        if(activeProducts && (thisProduct.element != activeProducts)){
-          activeProducts.classList.remove(classNames.menuProduct.wrapperActive);
-        }
-        //toggle active class on thisProduct.element
-        thisProduct.element.classList.toggle(classNames.menuProduct.wrapperActive);
-      });
-    }
   }
   const app = {
-    initData: function(){
-      const thisApp = this;
-      thisApp.data = dataSource;
-    },
-
     initMenu: function(){
       const thisApp = this;
       console.log('thisApp.data:', thisApp.data);
+      //const testProduct = new Product();
+      //console.log('testProduct', testProduct);
+      
       for(let productData in thisApp.data.products){
         new Product(productData, thisApp.data.products[productData]);
       }
+    },
+
+    initData: function(){
+      const thisApp = this;
+
+      thisApp.data = dataSource;
     },
 
     init: function(){
@@ -126,10 +97,11 @@
       console.log('classNames:', classNames);
       console.log('settings:', settings);
       console.log('templates:', templates);
+      
       thisApp.initData();
+      
       thisApp.initMenu();
-      //thisApp.initAccordion();
-    }
+    },
   };
     
 
